@@ -20,3 +20,28 @@ const soma = () => {
     alert(`Resultado: ${soma}`);
 };
 
+const olaMundo = () => {
+    console.log('Olá mundo!');
+};
+
+olaMundo();
+
+let nome = "Raoni";
+
+const olaNome = (nome) => {
+    console.log(`Olá, ${nome}`);
+};
+
+let numero = 55;
+
+const dobro = (numero) => {
+    return numero * 2
+};
+
+const media = (num1, num2, num3) => {
+    return media = (num1 + num2 + num3) / 3;
+};
+
+const multi = (numero) => {
+    return multi = numero * numero;
+};
