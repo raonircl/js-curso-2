@@ -1,47 +1,63 @@
-const titulo = document.querySelector('h1');
-titulo.innerHTML = 'Hora do Desafio';
+let listaDeNumerosSorteados = [];
+let tentativas = 1;
+let chute;
 
 const verificarChute = () => {
-    console.log('O botão foi clicado');
-    alert('Eu amo JS');
+    chute = parseInt(document.querySelector('input').value);
+
+    if (chute === numeroSecreto) {
+        exibirTexto('h1', 'Acertou!');
+        let palavraTentativa = tentativas > 1 ? 'tentativas' : 'tentativa';
+        let mensagensTentativas = `Você descobriu o número secreto com: ${tentativas} ${palavraTentativa}`;
+        exibirTexto('p', `${mensagensTentativas}`);
+        document.getElementById('reiniciar').removeAttribute('disabled');
+    } else {
+        if (chute > numeroSecreto) {
+            exibirTexto('p', 'Número secreto é menor');
+        } else {
+            exibirTexto('p', 'O número secreto é maior');
+        }
+        tentativas++;
+        limparCampo();
+    }
 }
 
-const verificarPrompt = () => {
-    console.log('O botão foi clicado');
-    const cidade = prompt('Diga o nome de uma cidade que você já esteve');
-    alert(`Estive em ${cidade} e lembrei de você`);
+const reiniciar = () => {
+    numeroSecreto = numeroAleatorio();
+    limparCampo();
+    tentativas = 1;
+    mensagemInicial();
+    document.getElementById('reiniciar').setAttribute('disabled', true);
 };
 
-const soma = () => {
-    const numero1 =  prompt('Digite um número: ');
-    const numero2 =  prompt('Digite um número: ');
-    const soma = parseInt(numero1) + parseInt(numero2);
-
-    alert(`Resultado: ${soma}`);
+const mensagemInicial = () => {
+    exibirTexto('h1','Jogo do núemero secreto');
+    exibirTexto('p','Escolha um número entre 1 e 10');
 };
 
-const olaMundo = () => {
-    console.log('Olá mundo!');
+const limparCampo = () => {
+    chute = document.querySelector('input');
+    chute.value = '';
 };
 
-olaMundo();
+const exibirTexto = (tag, texto) => {
+    let campo = document.querySelector(tag);
+    campo.innerHTML = texto;
+    responsiveVoice.speak(texto, 'Brazilian Portuguese Female'),{rate:1.2}
+}
 
-let nome = "Raoni";
+exibirTexto('h1','Jogo do núemero secreto');
+exibirTexto('p','Escolha um número entre 1 e 10');
 
-const olaNome = (nome) => {
-    console.log(`Olá, ${nome}`);
+const numeroAleatorio = () => {
+    const numero =  parseInt(Math.random() * 10 + 1);
+    
+    if (listaDeNumerosSorteados.includes(numero)) {
+        return numeroAleatorio();
+    }
+
+    listaDeNumerosSorteados.push(numero);
+    return numero;
 };
 
-let numero = 55;
-
-const dobro = (numero) => {
-    return numero * 2
-};
-
-const media = (num1, num2, num3) => {
-    return media = (num1 + num2 + num3) / 3;
-};
-
-const multi = (numero) => {
-    return multi = numero * numero;
-};
+let numeroSecreto = numeroAleatorio();
